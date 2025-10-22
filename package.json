@@ -16,8 +16,8 @@
   "main": "src/main.js",
   "scripts": {
     "test": "npm run lint",
-    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\"",
-    "fix": "eslint . --fix && prettier --write \"**/*.js\" \"**/*.json\"",
+    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\"",
+    "fix": "eslint . --fix && prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\"",
     "start": "node src/main.js"
   },
   "devDependencies": {
