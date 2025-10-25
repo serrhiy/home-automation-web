@@ -19,6 +19,8 @@ The web service communicates with the panel hardware to manage devices in real t
 - Event logging and history
 - Integration with multiple panels
 
+![Entity Relationship Diagram](diagrams/er_diagram.png 'Entity Relationship Diagram')
+
 ![Sofware Components Diagram](diagrams/components.png 'Sofware Components Diagram')
 
 ![BPMN Diagram](diagrams/bpmn.png 'BPMN Diagram')
