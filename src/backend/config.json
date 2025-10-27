@@ -10,5 +10,9 @@
       "password": "marcus"
     },
     "pool": { "min": 0, "max": 15 }
+  },
+  "sandbox": {
+    "timeout": 5000,
+    "displayErrors": false
   }
 }
