@@ -15,7 +15,7 @@
   "type": "commonjs",
   "main": "src/main.js",
   "scripts": {
-    "test": "npm run lint",
+    "test": "npm run lint && node --test",
     "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\"",
     "fix": "eslint . --fix && prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\"",
     "start": "node src/backend/main.js"
