@@ -3,11 +3,9 @@
 const path = require('node:path');
 const fsp = require('node:fs/promises');
 
-const exists = (file) =>
-  fsp.access(file).then(
-    () => true,
-    () => false,
-  );
+const toBool = [() => true, () => false];
+
+const exists = (file) => fsp.access(file).then(...toBool);
 
 const findServicesFiles = async (root, parent = '/', paths = new Map()) => {
   const files = await fsp.readdir(root, { withFileTypes: true });

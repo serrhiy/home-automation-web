@@ -14,9 +14,9 @@ const sandbox = { repository, db };
 
 const main = async () => {
   const router = await new Router(webRestApiPath, loader, sandbox);
-  const { schema } = router.getController('/operator', 'create');
+  const { schema, endpoint } = router.getController('/operator', 'create');
   const data = { label: 'label', publicKey: 'publicKey' };
-  console.log(validator.validate(data, schema));
+  console.log(validator.validate(data, schema), endpoint);
 };
 
 main().finally(db.destroy.bind(db));
