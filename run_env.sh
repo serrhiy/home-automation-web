@@ -1,5 +1,7 @@
 #!/bin/sh
 
+./gen_certs.sh
+
 build_image="docker.home-automation-web"
 
 if ! docker image inspect "$build_image" > /dev/null 2>&1; then
