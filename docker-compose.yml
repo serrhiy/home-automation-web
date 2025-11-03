@@ -18,8 +18,6 @@ services:
       - web-server
     stdin_open: true
     tty: true
-    ports:
-      - "8080:8080"
     command: /bin/bash
     networks:
       - private
@@ -40,6 +38,7 @@ services:
     restart: unless-stopped
     networks:
       - public
+      - private
 
   database:
     image: postgres:latest

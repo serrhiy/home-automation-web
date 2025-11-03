@@ -14,5 +14,8 @@
   "sandbox": {
     "timeout": 5000,
     "displayErrors": false
+  },
+  "webTransport": {
+    "port": 8080
   }
 }
