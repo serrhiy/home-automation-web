@@ -24,7 +24,7 @@ fileInput.addEventListener('change', () => {
   }
 });
 
-const main = () => {
+const main = async () => {
   const testData = generateTestData();
   testDataElement.textContent = testData;
 

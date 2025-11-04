@@ -24,6 +24,7 @@ const minLengthValidator = (minLength) => (string) => {
 
 module.exports = {
   create: {
+    needToken: false,
     fields: {
       publicKey: {
         optional: false,

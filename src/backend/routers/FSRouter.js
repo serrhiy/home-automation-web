@@ -45,7 +45,7 @@ const loadServices = async (root, loader) => {
   return new Map(results);
 };
 
-const getServices = async (root, loader, sandbox) => {
+const getServices = async (root, loader, sandbox, prefix) => {
   const services = await loadServices(root, loader);
   const routes = new Map();
   for (const [endpoint, { serviceFactory, schema }] of services) {
@@ -58,7 +58,7 @@ const getServices = async (root, loader, sandbox) => {
       }
       throw Error(`Schema ${methodName} does not exists!`);
     }
-    routes.set(endpoint, data);
+    routes.set(prefix + endpoint, data);
   }
   return routes;
 };
@@ -66,15 +66,15 @@ const getServices = async (root, loader, sandbox) => {
 class Router {
   #services = new Map();
 
-  constructor(root, loader, sandbox) {
-    const { promise, resolve, reject } = Promise.withResolvers();
-    getServices(root, loader, sandbox)
-      .then((services) => {
-        this.#services = services;
-        resolve(this);
-      })
-      .catch(reject);
-    return promise;
+  constructor(root, loader, sandbox, prefix) {
+    return new Promise((resolve, reject) => {
+      getServices(root, loader, sandbox, prefix)
+        .then((services) => {
+          this.#services = services;
+          resolve(this);
+        })
+        .catch(reject);
+    });
   }
 
   exists(service, endpoint) {
