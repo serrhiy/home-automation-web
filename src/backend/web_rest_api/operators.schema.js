@@ -37,4 +37,22 @@ module.exports = {
     },
     order: ['publicKey', 'label'],
   },
+  authenticate: {
+    needToken: false,
+    fields: {
+      label: {
+        optional: false,
+        validator: pipe(isString, minLengthValidator(3)),
+      },
+      token: {
+        optional: false,
+        validator: pipe(isString, minLengthValidator(16)),
+      },
+      solution: {
+        optional: false,
+        validator: pipe(isString, minLengthValidator(32)),
+      },
+    },
+    order: ['label', 'token', 'solution'],
+  },
 };

@@ -35,10 +35,10 @@ registrationForm.addEventListener('submit', (event) => {
   reader.addEventListener('load', async () => {
     try {
       const data = { label, publicKey: reader.result };
-      await api.operator.create(data);
+      await api.operators.create(data);
       location.replace('/');
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
   reader.readAsText(file);

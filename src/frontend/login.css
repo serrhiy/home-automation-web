@@ -43,3 +43,133 @@
 .copy-btn:hover {
   background: var(--primary-hover);
 }
+
+.container {
+  max-width: 500px;
+}
+
+.download-section {
+  display: none; /* Скрываем секцию с тестовыми данными */
+}
+
+.instructions-section {
+  background: #334155;
+  padding: 24px;
+  border-radius: var(--border-radius);
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.instructions-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.instructions-title::before {
+  content: '📋';
+  font-size: 18px;
+}
+
+.instructions-list {
+  list-style: none;
+  counter-reset: instruction-counter;
+}
+
+.instruction-item {
+  counter-increment: instruction-counter;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #475569;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  position: relative;
+  transition: var(--transition);
+}
+
+.instruction-item:hover {
+  background: #4b5563;
+  transform: translateX(4px);
+}
+
+.instruction-item:last-child {
+  margin-bottom: 0;
+}
+
+.instruction-item::before {
+  content: counter(instruction-counter);
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary-color);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.instruction-code {
+  display: block;
+  background: #1e293b;
+  padding: 12px;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #93c5fd;
+  border-left: 3px solid var(--primary-color);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.instruction-description {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.instruction-warning {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 4px;
+  border-left: 3px solid #ef4444;
+  font-size: 13px;
+  color: #fca5a5;
+}
+
+.instruction-warning strong {
+  color: #fecaca;
+}
+
+.download-hex-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.download-hex-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}

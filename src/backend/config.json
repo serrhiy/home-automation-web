@@ -17,5 +17,6 @@
   },
   "webTransport": {
     "port": 8080
-  }
+  },
+  "ttlStorage": 600
 }

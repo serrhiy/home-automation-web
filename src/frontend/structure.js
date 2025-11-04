@@ -1,5 +1,5 @@
 export default {
-  operator: ['create'],
+  operators: ['create', 'authenticate'],
   healthcheck: ['get'],
   challange: ['get'],
 };

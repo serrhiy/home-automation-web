@@ -2,36 +2,25 @@ import scaffold from './scaffold.js';
 import structure from './structure.js';
 import transport from './transport.js';
 
-const copyBtn = document.getElementById('copyBtn');
 const fileInput = document.getElementById('encryptedFile');
-const fileName = document.getElementById('fileName');
-const fileText = document.getElementById('fileText');
-const testDataElement = document.getElementById('testData');
 const authForm = document.getElementById('authenticationForm');
-
-fileInput.addEventListener('change', () => {
-  if (fileInput.files && fileInput.files[0]) {
-    const file = fileInput.files[0];
-    fileName.textContent = `Selected file: ${file.name}`;
-    fileName.style.display = 'block';
-    fileText.textContent = 'File selected';
-  }
-});
+const downloadHexBtn = document.getElementById('downloadHexBtn');
 
 const main = async () => {
   const api = scaffold(transport)(structure);
 
-  const testData = await api.challange.get();
-  testDataElement.textContent = testData;
+  const { challange, token } = await api.challange.get();
 
-  copyBtn.addEventListener('click', async (event) => {
-    event.preventDefault();
-    await navigator.clipboard.writeText(testData);
-    const originalText = copyBtn.textContent;
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => {
-      copyBtn.textContent = originalText;
-    }, 2000);
+  downloadHexBtn.addEventListener('click', () => {
+    const blob = new Blob([challange], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'message.base64';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   });
 
   authForm.addEventListener('submit', (event) => {
@@ -41,7 +30,7 @@ const main = async () => {
     const label = document.getElementById('label').value;
 
     if (!file) {
-      alert('Please select an encrypted file');
+      alert('Please select signature file');
       return;
     }
 
@@ -51,12 +40,20 @@ const main = async () => {
     }
 
     const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      console.log('Test data:', testData);
-      console.log('Label:', label);
-      console.log('Encrypted content:', reader.result);
+    reader.readAsDataURL(file);
+    reader.addEventListener('load', async () => {
+      const solution = reader.result.split(',')[1];
+      try {
+        const params = { label, token, solution };
+        const result = await api.operators.authenticate(params);
+        if (!result.success) {
+          return void console.error('Invalid signature');
+        }
+        location.replace('/');
+      } catch (error) {
+        console.error(error);
+      }
     });
-    reader.readAsText(file);
   });
 };
 
