@@ -1,19 +1,13 @@
+import scaffold from './scaffold.js';
+import structure from './structure.js';
+import transport from './transport.js';
+
 const copyBtn = document.getElementById('copyBtn');
 const fileInput = document.getElementById('encryptedFile');
 const fileName = document.getElementById('fileName');
 const fileText = document.getElementById('fileText');
 const testDataElement = document.getElementById('testData');
 const authForm = document.getElementById('authenticationForm');
-
-const SECURITY_KEY_BYTES_LEN = 64;
-
-const byteToHex = (byte) => byte.toString(16).padStart(2, '0');
-
-const generateTestData = () => {
-  const array = new Uint8Array(SECURITY_KEY_BYTES_LEN);
-  crypto.getRandomValues(array);
-  return Array.from(array, byteToHex).join('');
-};
 
 fileInput.addEventListener('change', () => {
   if (fileInput.files && fileInput.files[0]) {
@@ -25,7 +19,9 @@ fileInput.addEventListener('change', () => {
 });
 
 const main = async () => {
-  const testData = generateTestData();
+  const api = scaffold(transport)(structure);
+
+  const testData = await api.challange.get();
   testDataElement.textContent = testData;
 
   copyBtn.addEventListener('click', async (event) => {
