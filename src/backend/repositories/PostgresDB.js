@@ -42,7 +42,8 @@ module.exports = (db) => {
       const billing = billingPlanId ?? (await billingPlans.getFreePlan()).id;
       const planInfoId = await billingPlanInfo.create(billing);
       const fields = { label, planInfoId, token, publicKey };
-      const promise = db.insert(fields).into('operators').returning('*');
+      const returns = ['planInfoId', 'label', 'createdAt'];
+      const promise = db.insert(fields).into('operators').returning(returns);
       return promise.then(([operator]) => operator);
     },
   };
