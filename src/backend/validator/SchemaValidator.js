@@ -2,6 +2,9 @@
 
 const validate = (data, schema) => {
   if (!data && 'fields' in schema) {
+    return { valid: false, message: 'Body should not be empty' };
+  }
+  if (data && !('fields' in schema)) {
     return { valid: false, message: 'Body should be empty' };
   }
   for (const [field, rules] of Object.entries(schema.fields ?? {})) {
