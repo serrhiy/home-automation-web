@@ -1,0 +1,21 @@
+{
+  "name": "home-automation-web",
+  "version": "1.0.0",
+  "description": "Home automation service. Web part",
+  "homepage": "https://github.com/serrhiy/home-automation-web#readme",
+  "bugs": {
+    "url": "https://github.com/serrhiy/home-automation-web/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serrhiy/home-automation-web.git"
+  },
+  "license": "MIT",
+  "author": "Serhii Lytvynenko <serrheylitvinenko@gmail.com>",
+  "type": "commonjs",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"No test specified\"",
+    "start": "node src/main.js"
+  }
+}
