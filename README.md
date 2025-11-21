@@ -18,3 +18,7 @@ The web service communicates with the panel hardware to manage devices in real t
 - User authentication and authorization
 - Event logging and history
 - Integration with multiple panels
+
+![Sofware Components Diagram](diagrams/components.png 'Sofware Components Diagram')
+
+![BPMN Diagram](diagrams/bpmn.png 'BPMN Diagram')
