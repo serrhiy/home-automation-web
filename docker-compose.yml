@@ -1,0 +1,10 @@
+
+services:
+  web-server:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./src/frontend:/usr/share/nginx/html:ro
+    ports:
+      - '80:80'
+    restart: unless-stopped
