@@ -1,0 +1,45 @@
+.container {
+  max-width: 500px;
+}
+
+.download-section {
+  background: #334155;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+
+.download-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.test-data {
+  background: #475569;
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-family: monospace;
+  font-size: 14px;
+  word-break: break-all;
+  border: 1px solid var(--border-color);
+}
+
+.copy-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.copy-btn:hover {
+  background: var(--primary-hover);
+}

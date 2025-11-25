@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1 class="auth-title">Authentication</h1>
+        <p class="auth-subtitle">Verify your identity</p>
+      </div>
+
+      <div class="download-section">
+        <div class="download-title">Test Data (Encrypt this with your private key):</div>
+        <div class="test-data" id="testData"></div>
+        <button class="copy-btn" id="copyBtn">Copy to Clipboard</button>
+      </div>
+
+      <form id="authenticationForm">
+        <div class="form-group">
+          <label class="form-label" for="label">Label</label>
+          <input type="text" id="label" class="form-input" placeholder="Enter your label" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="encryptedFile">Encrypted File</label>
+          <div class="file-upload">
+            <input type="file" id="encryptedFile" class="file-input" accept=".txt,.enc,.bin">
+            <label for="encryptedFile" class="file-label">
+              <span class="file-text" id="fileText">Upload encrypted file</span>
+              <span class="file-button">Choose File</span>
+            </label>
+          </div>
+          <div class="file-name" id="fileName"></div>
+        </div>
+
+        <button type="submit" class="submit-button">Authenticate</button>
+      </form>
+
+      <div class="auth-switch">
+        <span>Don't have an account? </span>
+        <a href="register.html" class="auth-link">Register</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>
