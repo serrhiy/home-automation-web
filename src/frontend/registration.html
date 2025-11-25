@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  <link rel="stylesheet" href="registration.css">
+</head>
+<body>
+  <div class="container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1 class="auth-title">Registration</h1>
+        <p class="auth-subtitle">Create new free account</p>
+      </div>
+
+      <form id="registrationForm">
+        <div class="form-group">
+          <label class="form-label" for="publicKey">Publick key</label>
+          <div class="file-upload">
+            <input type="file" id="publicKey" class="file-input" accept=".pem,.pub,.key,.txt">
+            <label for="publicKey" class="file-label">
+              <span class="file-text" id="fileText">Load publick key file</span>
+              <span class="file-button">Select file</span>
+            </label>
+          </div>
+          <div class="file-name" id="fileName"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="username">ID</label>
+          <input type="text" id="username" class="form-input" placeholder="Enter your ID" required>
+        </div>
+
+        <button type="submit" class="submit-button">Create account</button>
+      </form>
+
+      <div class="auth-switch">
+        <span>Already have account?</span>
+        <a href="login.html" class="auth-link">Log in</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="registration.js"></script>
+</body>
+</html>
