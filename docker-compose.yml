@@ -33,7 +33,9 @@ services:
     volumes:
       - ./src/frontend:/usr/share/nginx/html:ro
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certs:/etc/nginx/certs
     ports:
+      - '443:443'
       - '80:80'
     restart: unless-stopped
     networks:
