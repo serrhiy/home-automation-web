@@ -21,21 +21,25 @@ registrationForm.addEventListener('submit', (event) => {
   const api = scaffold(transport)(structure);
 
   const file = fileInput.files[0];
-  const username = document.getElementById('username').value;
+  const label = document.getElementById('username').value;
 
   if (!file) {
-    alert('Select file with publick key');
-    return;
+    return void alert('Select file with publick key');
   }
 
-  if (!username) {
-    alert('Enter username');
-    return;
+  if (!label) {
+    return void alert('Enter username');
   }
 
   const reader = new FileReader();
   reader.addEventListener('load', async () => {
-    console.log(await api.healthcheck.get());
+    try {
+      const data = { label, publicKey: reader.result };
+      await api.operator.create(data);
+      location.replace('/');
+    } catch (error) {
+      console.log(error);
+    }
   });
   reader.readAsText(file);
 });

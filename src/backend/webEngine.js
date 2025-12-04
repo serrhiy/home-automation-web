@@ -6,6 +6,13 @@ const defaultHeaders = {
   'Content-Type': 'application/json',
 };
 
+const httpMethodMap = {
+  post: 'create',
+  get: 'get',
+  put: 'update',
+  delete: 'delete',
+};
+
 const getBody = async (stream) => {
   const chunks = [];
   for await (const chunk of stream) chunks.push(chunk);
@@ -42,7 +49,7 @@ const processError = (response, statusCode) => {
 };
 
 const getArguments = (body, schema) => {
-  if ('field' in schema) {
+  if ('fields' in schema) {
     return schema.order.map((field) => body[field]);
   }
   return [];
@@ -51,7 +58,7 @@ const getArguments = (body, schema) => {
 module.exports = async (router, validator, transport, repository) => {
   for await (const { request, response } of transport) {
     const { url, headers } = request;
-    const method = request.method.toLowerCase();
+    const method = httpMethodMap[request.method.toLowerCase()];
     if (!router.exists(url, method)) {
       processError(response, 404);
       continue;
@@ -71,16 +78,17 @@ module.exports = async (router, validator, transport, repository) => {
         continue;
       }
     }
-
     const validationResult = validator.validate(body, schema);
-    if (validationResult.valid) {
-      processError(response, 401);
+    if (!validationResult.valid) {
+      const { message } = validationResult;
+      response.writeHead(400, message, defaultHeaders);
+      response.end(JSON.stringify({ ok: false, message }));
       continue;
     }
 
     const args = getArguments(body, schema);
     try {
-      const answer = { ok: true, data: endpoint(...args, cookies) };
+      const answer = { ok: true, data: await endpoint(...args, cookies) };
       response.writeHead(200, { ...defaultHeaders, 'Set-Cookie': newCookies });
       response.end(JSON.stringify(answer));
     } catch (error) {

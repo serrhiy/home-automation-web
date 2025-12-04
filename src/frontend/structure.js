@@ -1,4 +1,4 @@
 export default {
-  operators: ['create'],
+  operator: ['create'],
   healthcheck: ['get'],
 };
