@@ -1,3 +1,7 @@
+import scaffold from './scaffold.js';
+import structure from './structure.js';
+import transport from './transport.js';
+
 const fileInput = document.getElementById('publicKey');
 const fileName = document.getElementById('fileName');
 const fileText = document.getElementById('fileText');
@@ -14,6 +18,8 @@ fileInput.addEventListener('change', () => {
 registrationForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
+  const api = scaffold(transport)(structure);
+
   const file = fileInput.files[0];
   const username = document.getElementById('username').value;
 
@@ -28,9 +34,8 @@ registrationForm.addEventListener('submit', (event) => {
   }
 
   const reader = new FileReader();
-  reader.addEventListener('load', () => {
-    console.log('Publick key: ', reader.result);
-    console.log('Username: ', username);
+  reader.addEventListener('load', async () => {
+    console.log(await api.healthcheck.get());
   });
   reader.readAsText(file);
 });
