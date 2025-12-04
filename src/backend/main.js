@@ -9,6 +9,8 @@ const Router = require('./routers/FSRouter.js');
 const validator = require('./validator/SchemaValidator.js');
 const crypto = require('node:crypto');
 const WebTransport = require('./transport/WebTransport.js');
+const webEngine = require('./webEngine.js');
+const Repository = require('./repositories/PostgresDB.js');
 
 const webRestApiPath = path.join(__dirname, 'web_rest_api');
 
@@ -16,11 +18,9 @@ const utils = { generateToken: crypto.randomUUID };
 const sandbox = { repository, utils };
 
 const main = async () => {
-  const router = await new Router(webRestApiPath, loader, sandbox);
-  const { schema, endpoint } = router.getController('/operator', 'create');
-  const data = { label: 'label', publicKey: 'publicKey' };
-  console.log(validator.validate(data, schema), endpoint);
-  await new WebTransport(config.webTransport);
+  const webRouter = await new Router(webRestApiPath, loader, sandbox, '/api');
+  await using webTransport = await new WebTransport(config.webTransport);
+  await webEngine(webRouter, validator, webTransport, Repository);
 };
 
 main().finally(db.destroy.bind(db));

@@ -33,6 +33,11 @@ module.exports = (db) => {
       return promise.then((result) => result.length !== 0);
     },
 
+    existsToken: (token) => {
+      const promise = db.select('id').from('operators').where({ token });
+      return promise.then((result) => result.length !== 0);
+    },
+
     create: async (label, publicKey, token, billingPlanId) => {
       const billing = billingPlanId ?? (await billingPlans.getFreePlan()).id;
       const planInfoId = await billingPlanInfo.create(billing);

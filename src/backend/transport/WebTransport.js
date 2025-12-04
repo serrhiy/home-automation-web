@@ -2,15 +2,31 @@
 
 const http = require('node:http');
 const { once } = require('node:events');
+const AsyncQueue = require('./AsyncQueue.js');
 
-class WebHTTP2Transport {
+class WebTransport {
   #server = null;
+  #asyncQueue = null;
+
   constructor({ port }) {
-    const callback = (request, response) => response.end('Success');
-    this.#server = http.createServer(callback);
+    this.#server = http.createServer(this.#onRequest.bind(this));
     this.#server.listen(port, '0.0.0.0');
-    return once(this.#server, 'listening');
+    this.#asyncQueue = new AsyncQueue();
+    return once(this.#server, 'listening').then(() => this);
+  }
+
+  #onRequest(request, response) {
+    this.#asyncQueue.put({ request, response });
+  }
+
+  [Symbol.asyncIterator]() {
+    return this.#asyncQueue[Symbol.asyncIterator]();
+  }
+
+  [Symbol.asyncDispose]() {
+    this.#server.closeAllConnections();
+    return this.#server[Symbol.asyncDispose]();
   }
 }
 
-module.exports = WebHTTP2Transport;
+module.exports = WebTransport;
