@@ -12,10 +12,11 @@ const getBody = async (stream) => {
 
 const parseBody = async (stream) => {
   try {
-    const body = await getBody(stream);
-    return JSON.parse(body.toString());
+    const data = await getBody(stream);
+    const body = data === null ? null : JSON.parse(data.toString());
+    return { invalid: false, body };
   } catch {
-    return null;
+    return { invalid: true, body: null };
   }
 };
 
@@ -53,7 +54,11 @@ module.exports = async (router, validator, transport, repository) => {
       processError(response, 404);
       continue;
     }
-    const body = await parseBody(request);
+    const { invalid, body } = await parseBody(request);
+    if (invalid) {
+      processError(response, 400);
+      continue;
+    }
     const { endpoint, schema } = router.getController(url, method);
 
     if (schema.needToken) {
@@ -66,7 +71,7 @@ module.exports = async (router, validator, transport, repository) => {
 
     const validationResult = validator.validate(body, schema);
     if (validationResult.valid) {
-      processError(response, 400);
+      processError(response, 401);
       continue;
     }
 
