@@ -1,5 +1,7 @@
 'use strict';
 
+const getCookies = require('./cookies.js');
+
 const defaultHeaders = {
   'Content-Type': 'application/json',
 };
@@ -26,9 +28,9 @@ const responseMessageFromCode = {
   401: 'Token not found',
 };
 
-const isAuthenticated = async (headers, repository) => {
-  if ('token' in headers) {
-    return await repository.operators.existsToken(headers.token);
+const isAuthenticated = async (cookies, repository) => {
+  if (cookies.has('token')) {
+    return await repository.operators.existsToken(cookies.get('token'));
   }
   return false;
 };
@@ -60,9 +62,10 @@ module.exports = async (router, validator, transport, repository) => {
       continue;
     }
     const { endpoint, schema } = router.getController(url, method);
+    const { newCookies, cookies } = getCookies(headers.cookie);
 
     if (schema.needToken) {
-      const authenticated = await isAuthenticated(headers, repository);
+      const authenticated = await isAuthenticated(cookies, repository);
       if (!authenticated) {
         processError(response, 401);
         continue;
@@ -77,8 +80,8 @@ module.exports = async (router, validator, transport, repository) => {
 
     const args = getArguments(body, schema);
     try {
-      const answer = { ok: true, data: endpoint(...args) };
-      response.writeHead(200, defaultHeaders);
+      const answer = { ok: true, data: endpoint(...args, cookies) };
+      response.writeHead(200, { ...defaultHeaders, 'Set-Cookie': newCookies });
       response.end(JSON.stringify(answer));
     } catch (error) {
       response.writeHead(400, defaultHeaders);
