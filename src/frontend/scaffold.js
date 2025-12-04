@@ -4,7 +4,7 @@ export default (transport) => {
     for (const [service, methods] of Object.entries(structure)) {
       const path = url + '/' + service;
       if (!Array.isArray(methods)) {
-        api[service] = scaffold(transport)(methods, path);
+        api[service] = scaffold(methods, path);
         continue;
       }
       const functions = Object.create(null);

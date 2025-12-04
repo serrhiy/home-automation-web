@@ -1,7 +1,7 @@
 'use strict';
 
 const validate = (data, schema) => {
-  if (data === null && 'fields' in schema) {
+  if (!data && 'fields' in schema) {
     return { valid: false, message: 'Body should be empty' };
   }
   for (const [field, rules] of Object.entries(schema.fields ?? {})) {

@@ -15,10 +15,33 @@
         <p class="auth-subtitle">Verify your identity</p>
       </div>
 
-      <div class="download-section">
-        <div class="download-title">Test Data (Encrypt this with your private key):</div>
-        <div class="test-data" id="testData"></div>
-        <button class="copy-btn" id="copyBtn">Copy to Clipboard</button>
+      <div class="instructions-section">
+        <div class="instructions-title">Instructions for authentication:</div>
+        <ol class="instructions-list">
+          <li class="instruction-item">
+            Download the test data file
+            <div class="instruction-description">
+              <button class="download-hex-btn" id="downloadHexBtn">
+                <span>📥</span> Download message.base64
+              </button>
+            </div>
+          </li>
+          <li class="instruction-item">
+            Convert hex to binary
+            <code class="instruction-code">base64 --decode message.base64 > message.bin</code>
+            <div class="instruction-description">Converts base64 representation back to binary</div>
+          </li>
+          <li class="instruction-item">
+            Sign with your private key
+            <code class="instruction-code">openssl dgst -sha256 -sign private.key -out signature.bin message.bin</code>
+            <div class="instruction-description">Creates digital signature using your private RSA key</div>
+          </li>
+        </ol>
+
+        <div class="instruction-warning">
+          <strong>Important:</strong> The signature.bin file is what you need to upload below.
+          Never share your private.key file!
+        </div>
       </div>
 
       <form id="authenticationForm">
@@ -28,15 +51,14 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="encryptedFile">Encrypted File</label>
+          <label class="form-label" for="encryptedFile">Signature File</label>
           <div class="file-upload">
-            <input type="file" id="encryptedFile" class="file-input" accept=".txt,.enc,.bin">
+            <input type="file" id="encryptedFile" class="file-input" accept=".bin,.sig,.sign">
             <label for="encryptedFile" class="file-label">
-              <span class="file-text" id="fileText">Upload encrypted file</span>
+              <span class="file-text">Upload signature.bin file</span>
               <span class="file-button">Choose File</span>
             </label>
           </div>
-          <div class="file-name" id="fileName"></div>
         </div>
 
         <button type="submit" class="submit-button">Authenticate</button>

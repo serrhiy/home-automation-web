@@ -38,6 +38,11 @@ module.exports = (db) => {
       return promise.then((result) => result.length !== 0);
     },
 
+    get: (condition) =>
+      db.select('*').from('operators').where(condition).first(),
+
+    update: (id, values) => db('operators').where({ id }).update(values),
+
     create: async (label, publicKey, token, billingPlanId) => {
       const billing = billingPlanId ?? (await billingPlans.getFreePlan()).id;
       const planInfoId = await billingPlanInfo.create(billing);
