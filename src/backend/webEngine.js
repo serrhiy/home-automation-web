@@ -52,7 +52,6 @@ module.exports = async (router, validator, transport, repository) => {
   for await (const { request, response } of transport) {
     const { url, headers } = request;
     const { invalid, body } = await parseBody(request);
-
     if (invalid || !('method' in body)) {
       processError(response, 400);
       continue;

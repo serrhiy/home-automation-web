@@ -29,7 +29,7 @@ create table "operators" (
 
 alter table "operators" add constraint "pkOperators" primary key ("id");
 alter table "operators" add constraint "fkOperatorsPlanInfoIdBillingPlanInfoId"
-  foreign key ("planInfoId") references "billingPlanInfo" ("id");
+  foreign key ("planInfoId") references "billingPlanInfo" ("id") ON DELETE CASCADE;
 create unique index "akOperatorsLabel" on "operators" ("label");
 create unique index "akOperatorsToken" on "operators" ("token");
 
